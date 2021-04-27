@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Somentom</title>
+  <link rel="stylesheet" type="text/css" href="somentum.css">
+  <style> /* 구글 웹폰트 사용 */
+    @import url('https://fonts.googleapis.com/css2?family=Cabin:wght@700&display=swap'); 
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap');
+  </style>
+</head>
+<body>
+  <!-- 시계 부분 -->
+  <div class="js-clock"> 
+    <h1 class="js-title"></h1>
+  </div>
+
+  <!-- 이름을 입력 받는 폼 부분 -->
+  <form class="js-form form"> 
+    <input type="text" placeholder="what is your name?">
+  </form>
+
+  <!-- greetings 부분 -->
+  <h4 class="js-greetings greetings"></h4>
+
+  <!-- to do list를 입력 받는 폼 부분-->
+  <form class="js-toDoForm">
+    <input type="text" placeholder="Write a To Do here">
+  </form>
+  <ul class="js-toDoList"></ul>
+  <br> <br>
+  <span class="js-weather"></span>
+  <span class="creator">created by Soya-s2</span>
+
+  <!-- js 가져오기 -->
+  <script src="clock.js"></script>
+  <script src="greeting.js"></script>
+  <script src="todo.js"></script>
+  <script src="bg.js"></script>
+  <script src="weather.js"></script>
+</body>
+</html>
