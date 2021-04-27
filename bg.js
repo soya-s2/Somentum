@@ -8,7 +8,7 @@
 
 const body = document.querySelector("body");
 
-const IMG_NUMBER = 6; // 이미지의 개수 지정
+const IMG_NUMBER = 20; // 이미지의 개수 지정
 
 
 function paintImage(imageNumber) { // 이미지를 화면에 표시하는 함수
