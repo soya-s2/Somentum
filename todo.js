@@ -47,19 +47,28 @@ function deleteToDo(event) { // X 버튼(delBtn)을 누르면 실행되는 함�
 }
 
 function paintToDo(text) { // 할 일 목록을 구성하는 함수
-  // X 버튼(목록 삭제)을 생성하고 클릭 이벤트 핸들러를 지정하는 부분
-  const delBtn = document.createElement("button");
-  delBtn.addEventListener("click", deleteToDo);
-  const img = document.createElement("img");
-  img.src = "/images/xBtn.png";
+  // X 버튼(목록 삭제), 체크 버튼(목록 완료)을 생성하고 클릭 이벤트 핸들러를 지정하는 부분
+  const xBtn = document.createElement("button");
+  const checkBtn = document.createElement("button");
+
+  xBtn.addEventListener("click", deleteToDo);
+
+  const xBtnImg = document.createElement("img");
+  const checkBtnImg = document.createElement("img");
+  xBtnImg.src = "/images/xBtn.png";
+  checkBtnImg.src = "/images/checkBtn.png";
+
   // 할 일 목록의 구성 요소를 생성하고 append하는 부분
   const li = document.createElement("li"); 
   const span = document.createElement("span"); 
   const newId = toDos.length + 1; // li의 id가 될 부분. image가 1.jpg라면 1이 됨
   span.innerText = text; // 사용자가 입력한 text가 span 태그 안에 들어감
-  delBtn.appendChild(img);
+  
+  xBtn.appendChild(xBtnImg);
+  checkBtn.appendChild(checkBtnImg);
   li.appendChild(span); 
-  li.appendChild(delBtn);
+  li.appendChild(xBtn);
+  li.appendChild(checkBtn);
   
   li.id = newId;
   toDoList.appendChild(li); 
