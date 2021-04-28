@@ -125,6 +125,7 @@ h4 {
 .js-title {
   margin-top: 150px;
   margin-bottom: 40px;
+  text-shadow: 5px 5px 8px rgb(29, 29, 29);
 }
 
 .checked {
