@@ -126,3 +126,7 @@ h4 {
   margin-top: 150px;
   margin-bottom: 40px;
 }
+
+.checked {
+  text-decoration: line-through rgba(0, 0, 0, 0.815) 0.3em;
+}

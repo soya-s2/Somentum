@@ -17,6 +17,11 @@ X 버튼은 할 일 목록을 삭제해주는 버튼이다.
 버튼만 제거하는 것이 아니라 목록 자체를 삭제해야 하므로
 부모 노드를 불러와 list 자체를 삭제해준다.
 
+---checkToDo(event)---
+체크 버튼을 누르면 해당 목록을 완료한 것처럼 
+할 일 목록에 선이 그어져 보이게 한다.
+이후 되돌리기 버튼이 나타나고 다시 선을 지울 수 있다.
+
 할 일 목록의 추가/삭제 작업이 이루어지면,
 ---saveToDos() 함수로 localStorage에 있는 목록을 업데이트 해준다.
 */
@@ -31,6 +36,18 @@ let toDos = [];
 
 function saveToDos() { // localStorage에 있는 toDos를 업데이트 시키는 함수
   localStorage.setItem(TODOS_LS, JSON.stringify(toDos)); // JSON.stringify는 js obj를 string으로 변환해줌
+}
+
+function checkToDo(event) { // check 버튼을 누르면 실행되는 함수.
+  const img = event.target;
+  const btn = img.parentNode;
+  const li = btn.parentNode;
+  li.classList.toggle("checked"); // li에 checked 클래스가 없으면 추가, 있으면 삭제
+  if (li.classList.contains("checked")) { // 체크된 상태이면 되돌리기 버튼을 표시
+    img.src = "images/revertBtn.png";
+  } else {
+    img.src = "images/checkBtn.png";
+  }
 }
 
 function deleteToDo(event) { // X 버튼(delBtn)을 누르면 실행되는 함수, delBtn의 클릭 이벤트 핸들러
@@ -52,6 +69,7 @@ function paintToDo(text) { // 할 일 목록을 구성하는 함수
   const checkBtn = document.createElement("button");
 
   xBtn.addEventListener("click", deleteToDo);
+  checkBtn.addEventListener("click", checkToDo);
 
   const xBtnImg = document.createElement("img");
   const checkBtnImg = document.createElement("img");
