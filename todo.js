@@ -31,26 +31,35 @@ const toDoForm = document.querySelector(".js-toDoForm"),
   toDoList = document.querySelector(".js-toDoList"); 
 
 const TODOS_LS = "toDos"; // localStorage에 저장될 할 일 목록들
-
 let toDos = []; 
 
+function toRevertBtn(img) { // 되돌리기 버튼 이미지로 변환
+  img.src = "images/revertBtn.png";
+}
+
+function toCheckBtn(img) { // 체크 버튼 이미지로 변환
+  img.src = "images/checkBtn.png";
+}
 function saveToDos() { // localStorage에 있는 toDos를 업데이트 시키는 함수
   localStorage.setItem(TODOS_LS, JSON.stringify(toDos)); // JSON.stringify는 js obj를 string으로 변환해줌
 }
 
-function checkToDo(event) { // check 버튼을 누르면 실행되는 함수.
+function checkToDo(event) { // check 버튼을 누르면 실행되는 함수
   const img = event.target;
   const btn = img.parentNode;
   const li = btn.parentNode;
   li.classList.toggle("checked"); // li에 checked 클래스가 없으면 추가, 있으면 삭제
   if (li.classList.contains("checked")) { // 체크된 상태이면 되돌리기 버튼을 표시
-    img.src = "images/revertBtn.png";
+    toDos[li.id - 1].checked = true;
+    toRevertBtn(img);
   } else {
-    img.src = "images/checkBtn.png";
+    toDos[li.id - 1].checked = false;
+    toCheckBtn(img);
   }
+  saveToDos();
 }
 
-function deleteToDo(event) { // X 버튼(delBtn)을 누르면 실행되는 함수, delBtn의 클릭 이벤트 핸들러
+function deleteToDo(event) { // X 버튼(delBtn)을 누르면 실행되는 함수, delBtn의 클릭 이벤트 리스너
   const img = event.target;
   const btn = img.parentNode;
   const li = btn.parentNode;
@@ -63,8 +72,8 @@ function deleteToDo(event) { // X 버튼(delBtn)을 누르면 실행되는 함�
   saveToDos(); // 새 toDos를 업데이트 해줌
 }
 
-function paintToDo(text) { // 할 일 목록을 구성하는 함수
-  // X 버튼(목록 삭제), 체크 버튼(목록 완료)을 생성하고 클릭 이벤트 핸들러를 지정하는 부분
+function paintToDo(text, checked) { // 할 일 목록을 구성하는 함수
+  // X 버튼(목록 삭제), 체크 버튼(목록 완료)을 생성하고 클릭 이벤트 리스너를 지정하는 부분
   const xBtn = document.createElement("button");
   const checkBtn = document.createElement("button");
 
@@ -87,16 +96,25 @@ function paintToDo(text) { // 할 일 목록을 구성하는 함수
   li.appendChild(span); 
   li.appendChild(xBtn);
   li.appendChild(checkBtn);
-  
   li.id = newId;
-  toDoList.appendChild(li); 
-
+  toDoList.appendChild(li);
+  
+  
   // 할 일 목록 배열(toDos)은 사용자가 입력한 할 일 text와 id로 구성된 객체로 이루어짐
   const toDoObj = {
     text: text,
-    id: newId
+    id: newId,
+    checked: checked
   };
+
+  if (checked === true) { // localStorage의 checked를 판별하여 reload
+    li.classList.add("checked");
+    toRevertBtn(checkBtnImg);
+  } else {
+    toCheckBtn(checkBtnImg);
+  }
   toDos.push(toDoObj); // 할 일 목록에 객체를 추가
+
   saveToDos(); // js의 localStorage는 데이터를 저장 불가함. 즉 모든 데이터를 string으로 저장/처리하려고 함. 즉 obj를 string화가 필요함.
 }
 
@@ -114,7 +132,7 @@ function loadToDos() { // 새로고침을 해도 localStorage에서 toDos를 가
     // 데이터 전달 시 js가 처리 가능하도록 obj로 바꿔주는 기능임.
     // 즉 string과 obj 사이의 변환을 도와줌
     parsedToDos.forEach(function (toDo) {
-      paintToDo(toDo.text)
+      paintToDo(toDo.text, toDo.checked);
     });
    // parsedToDos를 순회하며 매개변수로 입력한 함수를 실행함
   } 
@@ -122,7 +140,7 @@ function loadToDos() { // 새로고침을 해도 localStorage에서 toDos를 가
 
 function init() {
   loadToDos(); // toDos를 불러옴
-  toDoForm.addEventListener("submit", handleSubmit); // toDoForm에 submit 이벤트 발생 시 이벤트 핸들러 추가
+  toDoForm.addEventListener("submit", handleSubmit); // toDoForm에 submit 이벤트 발생 시 이벤트 리스너 추가
 }
 
 init();
